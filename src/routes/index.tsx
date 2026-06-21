@@ -21,7 +21,7 @@ function Index() {
         </p>
         <div className="flex items-center justify-center gap-3 pt-2">
           <Button asChild size="lg">
-            <Link to="/auth">Get started</Link>
+            <Link to="/auth">Sign in / Sign up</Link>
           </Button>
           <Button asChild size="lg" variant="outline">
             <Link to="/dashboard">Dashboard</Link>
