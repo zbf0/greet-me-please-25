@@ -146,11 +146,18 @@ function RootComponent() {
             {isAuthed ? (
               <>
                 <Link
-                  to="/dashboard"
+                  to="/information"
                   activeProps={{ className: "bg-accent text-accent-foreground" }}
                   className="px-3 py-1.5 rounded-md hover:bg-accent transition-colors"
                 >
-                  Dashboard
+                  Information
+                </Link>
+                <Link
+                  to="/help"
+                  activeProps={{ className: "bg-accent text-accent-foreground" }}
+                  className="px-3 py-1.5 rounded-md hover:bg-accent transition-colors"
+                >
+                  Look for Help
                 </Link>
                 <Link
                   to="/profile"

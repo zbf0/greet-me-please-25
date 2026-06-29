@@ -4,12 +4,12 @@ import type { User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-export const Route = createFileRoute("/dashboard")({
-  head: () => ({ meta: [{ title: "Dashboard" }] }),
-  component: Dashboard,
+export const Route = createFileRoute("/information")({
+  head: () => ({ meta: [{ title: "Information" }] }),
+  component: Information,
 });
 
-function Dashboard() {
+function Information() {
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
@@ -36,7 +36,6 @@ function Dashboard() {
   return (
     <div className="min-h-screen bg-background">
       <main className="container mx-auto px-4 py-10 max-w-2xl">
-
         <Card>
           <CardHeader>
             <CardTitle>Welcome back</CardTitle>
