@@ -144,13 +144,22 @@ function RootComponent() {
               Home
             </Link>
             {isAuthed ? (
-              <Link
-                to="/dashboard"
-                activeProps={{ className: "bg-accent text-accent-foreground" }}
-                className="px-3 py-1.5 rounded-md hover:bg-accent transition-colors"
-              >
-                Dashboard
-              </Link>
+              <>
+                <Link
+                  to="/dashboard"
+                  activeProps={{ className: "bg-accent text-accent-foreground" }}
+                  className="px-3 py-1.5 rounded-md hover:bg-accent transition-colors"
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  to="/profile"
+                  activeProps={{ className: "bg-accent text-accent-foreground" }}
+                  className="px-3 py-1.5 rounded-md hover:bg-accent transition-colors"
+                >
+                  Profile
+                </Link>
+              </>
             ) : (
               <Link
                 to="/auth"
@@ -160,6 +169,7 @@ function RootComponent() {
                 Sign in
               </Link>
             )}
+
           </div>
         </div>
       </nav>
