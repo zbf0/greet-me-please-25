@@ -119,6 +119,37 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <nav className="w-full border-b bg-background/80 backdrop-blur sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto flex items-center justify-between px-4 h-14">
+          <Link to="/" className="font-semibold tracking-tight">
+            My App
+          </Link>
+          <div className="flex items-center gap-1 text-sm">
+            <Link
+              to="/"
+              activeOptions={{ exact: true }}
+              activeProps={{ className: "bg-accent text-accent-foreground" }}
+              className="px-3 py-1.5 rounded-md hover:bg-accent transition-colors"
+            >
+              Home
+            </Link>
+            <Link
+              to="/dashboard"
+              activeProps={{ className: "bg-accent text-accent-foreground" }}
+              className="px-3 py-1.5 rounded-md hover:bg-accent transition-colors"
+            >
+              Dashboard
+            </Link>
+            <Link
+              to="/auth"
+              activeProps={{ className: "bg-accent text-accent-foreground" }}
+              className="px-3 py-1.5 rounded-md hover:bg-accent transition-colors"
+            >
+              Sign in
+            </Link>
+          </div>
+        </div>
+      </nav>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
       <Toaster richColors position="top-center" />
