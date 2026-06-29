@@ -7,11 +7,12 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Toaster } from "sonner";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { supabase } from "@/integrations/supabase/client";
 
 function NotFoundComponent() {
   return (
@@ -116,6 +117,15 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const [isAuthed, setIsAuthed] = useState(false);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => setIsAuthed(!!data.session));
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
+      setIsAuthed(!!session);
+    });
+    return () => sub.subscription.unsubscribe();
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -133,20 +143,23 @@ function RootComponent() {
             >
               Home
             </Link>
-            <Link
-              to="/dashboard"
-              activeProps={{ className: "bg-accent text-accent-foreground" }}
-              className="px-3 py-1.5 rounded-md hover:bg-accent transition-colors"
-            >
-              Dashboard
-            </Link>
-            <Link
-              to="/auth"
-              activeProps={{ className: "bg-accent text-accent-foreground" }}
-              className="px-3 py-1.5 rounded-md hover:bg-accent transition-colors"
-            >
-              Sign in
-            </Link>
+            {isAuthed ? (
+              <Link
+                to="/dashboard"
+                activeProps={{ className: "bg-accent text-accent-foreground" }}
+                className="px-3 py-1.5 rounded-md hover:bg-accent transition-colors"
+              >
+                Dashboard
+              </Link>
+            ) : (
+              <Link
+                to="/auth"
+                activeProps={{ className: "bg-accent text-accent-foreground" }}
+                className="px-3 py-1.5 rounded-md hover:bg-accent transition-colors"
+              >
+                Sign in
+              </Link>
+            )}
           </div>
         </div>
       </nav>
