@@ -1,5 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { Button } from "@/components/ui/button";
+import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -19,14 +18,6 @@ function Index() {
         <p className="text-lg text-muted-foreground">
           A clean starting point with authentication wired up to your database.
         </p>
-        <div className="flex items-center justify-center gap-3 pt-2">
-          <Button asChild size="lg">
-            <Link to="/auth">Sign in / Sign up</Link>
-          </Button>
-          <Button asChild size="lg" variant="outline">
-            <Link to="/dashboard">Dashboard</Link>
-          </Button>
-        </div>
       </div>
     </div>
   );
