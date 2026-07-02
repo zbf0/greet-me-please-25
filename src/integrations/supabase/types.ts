@@ -14,6 +14,66 @@ export type Database = {
   }
   public: {
     Tables: {
+      mentee_profiles: {
+        Row: {
+          academic_level: string
+          age: number
+          created_at: string
+          id: string
+          major: string
+          needs_help_with: string
+          user_id: string | null
+        }
+        Insert: {
+          academic_level: string
+          age: number
+          created_at?: string
+          id?: string
+          major: string
+          needs_help_with: string
+          user_id?: string | null
+        }
+        Update: {
+          academic_level?: string
+          age?: number
+          created_at?: string
+          id?: string
+          major?: string
+          needs_help_with?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      mentor_profiles: {
+        Row: {
+          academic_level: string
+          age: number
+          can_help_with: string
+          created_at: string
+          id: string
+          major: string
+          user_id: string | null
+        }
+        Insert: {
+          academic_level: string
+          age: number
+          can_help_with: string
+          created_at?: string
+          id?: string
+          major: string
+          user_id?: string | null
+        }
+        Update: {
+          academic_level?: string
+          age?: number
+          can_help_with?: string
+          created_at?: string
+          id?: string
+          major?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       posts: {
         Row: {
           content: string | null
