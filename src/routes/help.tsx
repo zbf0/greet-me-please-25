@@ -166,12 +166,22 @@ function MenteeForm({ onDone }: { onDone: () => void }) {
   const [major, setMajor] = useState("");
   const [needsHelpWith, setText] = useState("");
 
+  const [formError, setFormError] = useState<string | null>(null);
+
   const mut = useMutation({
     mutationFn: (data: {
       academicLevel: Level; age: number; major: string; needsHelpWith: string;
     }) => fn({ data }),
     onSuccess: () => onDone(),
   });
+
+  function validate(): string | null {
+    const n = Number(age);
+    if (!Number.isInteger(n) || n < 16 || n > 100) return "Age must be a whole number between 16 and 100.";
+    if (major.trim().length < 2) return "Please enter your major (at least 2 characters).";
+    if (needsHelpWith.trim().length < 10) return "Please describe what you need help with (at least 10 characters).";
+    return null;
+  }
 
   return (
     <Card className="mt-4">
@@ -181,7 +191,10 @@ function MenteeForm({ onDone }: { onDone: () => void }) {
           className="space-y-5"
           onSubmit={(e) => {
             e.preventDefault();
-            mut.mutate({ academicLevel, age: Number(age), major, needsHelpWith });
+            const err = validate();
+            if (err) { setFormError(err); return; }
+            setFormError(null);
+            mut.mutate({ academicLevel, age: Number(age), major: major.trim(), needsHelpWith: needsHelpWith.trim() });
           }}
         >
           <div className="space-y-2">
@@ -193,21 +206,23 @@ function MenteeForm({ onDone }: { onDone: () => void }) {
           </div>
           <div className="space-y-2">
             <Label htmlFor="s-age">Age</Label>
-            <Input id="s-age" type="number" value={age} onChange={(e) => setAge(e.target.value)} required />
+            <Input id="s-age" type="number" min={16} max={100} value={age} onChange={(e) => setAge(e.target.value)} required />
           </div>
           <div className="space-y-2">
             <Label htmlFor="s-major">Major</Label>
             <Input id="s-major" value={major} onChange={(e) => setMajor(e.target.value)} required />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="s-help">What do you need help with?</Label>
+            <Label htmlFor="s-help">What do you need help with? (min 10 characters)</Label>
             <Textarea id="s-help" rows={4} value={needsHelpWith} onChange={(e) => setText(e.target.value)} required />
           </div>
           <Button type="submit" disabled={mut.isPending}>
             {mut.isPending ? "Saving…" : "Save profile & find matches"}
           </Button>
-          {mut.isError && <p className="text-sm text-destructive">{(mut.error as Error).message}</p>}
+          {formError && <p className="text-sm text-destructive">{formError}</p>}
+          {mut.isError && !formError && <p className="text-sm text-destructive">Could not save profile. Please check your inputs and try again.</p>}
         </form>
+
 
         {mut.data && (
           <Matches
